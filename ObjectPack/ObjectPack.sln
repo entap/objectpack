@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectPack", "ObjectPack\ObjectPack.csproj", "{E729C761-6D93-4EDC-9332-0632C32693B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectPackTest", "ObjectPackTest\ObjectPackTest.csproj", "{96BD451B-D142-4879-802B-58DC7B34EE34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObjectPackUnity", "ObjectPackUnity\ObjectPackUnity.csproj", "{D3345767-50E4-426A-96C1-3E9816C077E4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E729C761-6D93-4EDC-9332-0632C32693B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E729C761-6D93-4EDC-9332-0632C32693B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E729C761-6D93-4EDC-9332-0632C32693B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E729C761-6D93-4EDC-9332-0632C32693B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96BD451B-D142-4879-802B-58DC7B34EE34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96BD451B-D142-4879-802B-58DC7B34EE34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96BD451B-D142-4879-802B-58DC7B34EE34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96BD451B-D142-4879-802B-58DC7B34EE34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3345767-50E4-426A-96C1-3E9816C077E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3345767-50E4-426A-96C1-3E9816C077E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3345767-50E4-426A-96C1-3E9816C077E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3345767-50E4-426A-96C1-3E9816C077E4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

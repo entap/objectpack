@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D3345767-50E4-426A-96C1-3E9816C077E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ObjectPackUnity</RootNamespace>
+    <AssemblyName>ObjectPack</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\ObjectPackUnity\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\ObjectPackUnity\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <LangVersion>4</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="..\ObjectPack\JsonToken.cs">
+      <Link>JsonToken.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\JsonTokenizer.cs">
+      <Link>JsonTokenizer.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\JsonException.cs">
+      <Link>JsonException.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\CollectionMapper.cs">
+      <Link>CollectionMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\IObjectMapper.cs">
+      <Link>IObjectMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\JsonDecoder.cs">
+      <Link>JsonDecoder.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\ReflectionMapper.cs">
+      <Link>ReflectionMapper.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\Json.cs">
+      <Link>Json.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\JsonEncoder.cs">
+      <Link>JsonEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\ObjectPack\ReflectionUtils.cs">
+      <Link>ReflectionUtils.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
