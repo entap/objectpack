@@ -3,7 +3,7 @@
 C#用のJSON/MessagePackのエンコーダー、デコーダー。ORマッパー機能を搭載。
 そのうちチューニング頑張る。あ、MessagePackはまだ実装してないんだけどね。
 
-https://entap.github.io/objectpack/index.html
+https://entap.github.io/objectpack/
 
 ## DLLのダウンロード(.NET framework 3.5)
 https://entap.github.io/objectpack/ObjectPack.dll
