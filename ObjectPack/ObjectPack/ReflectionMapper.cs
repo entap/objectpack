@@ -9,7 +9,7 @@ namespace Entap.ObjectPack
 	public class ReflectionMapper<T> : IObjectMapper where T : new()
 	{
 		/// <summary>
-		/// 親オブジェクトのプロパティに該当するオブジェクトを生成する。
+		/// プロパティを指定し、その型に適合するオブジェクトを生成する。
 		/// </summary>
 		/// <returns>生成されたオブジェクト</returns>
 		/// <param name="target">親オブジェクト</param>
@@ -21,7 +21,7 @@ namespace Entap.ObjectPack
 		}
 
 		/// <summary>
-		/// 親オブジェクトのプロパティに値を設定する。
+		/// プロパティに値を設定する。
 		/// </summary>
 		/// <param name="target">親オブジェクト</param>
 		/// <param name="propertyName">プロパティ名</param>
@@ -29,47 +29,39 @@ namespace Entap.ObjectPack
 		public void SetProperty(object target, string propertyName, object propertyValue)
 		{
 			if (target is IDictionary) {
-				// コレクションに追加する
+				// 辞書型に追加する
 				var elementType = ReflectionUtils.GetCollectionElementType(target.GetType());
 				var value = ReflectionUtils.Convert(propertyValue, elementType);
 				((IDictionary)target).Add(propertyName, value);
 			} else {
 				// オブジェクトのプロパティに値を設定
-				var field = target.GetType().GetField(propertyName);
-				if (field != null) {
-					var value = ReflectionUtils.Convert(propertyValue, field.FieldType);
-					if (value != null) {
-						field.SetValue(target, value);
-					}
-				}
-				var property = target.GetType().GetProperty(propertyName);
-				if (property != null) {
-					var value = ReflectionUtils.Convert(propertyValue, property.PropertyType);
-					if (value != null) {
-						property.SetValue(target, value, null);
-					}
-				}
+				ReflectionUtils.SetProperty(target, propertyName, propertyValue);
 			}
 		}
 
 		/// <summary>
-		/// 親オブジェクトのプロパティに該当する配列を生成する。
+		/// プロパティを指定し、その型に適合する配列を生成する。
 		/// </summary>
-		/// <returns>生成されたオブジェクト</returns>
+		/// <returns>生成された配列</returns>
 		/// <param name="target">親オブジェクト</param>
 		/// <param name="propertyName">プロパティ名</param>
 		public object CreateArray(object target, string propertyName)
 		{
 			Type type = GetPropertyType(target, propertyName);
 			if (type.IsArray) {
-				return new ArrayList(); // 固定長配列の場合、一度、可変長配列を生成する
+				// 固定長配列の場合、一度、可変長配列を生成する
+				return new ArrayList();
+			} else if (ReflectionUtils.HasInterface(type, typeof(IList))) {
+				// 指定されたプロパティには配列の機能がある。
+				// 決まった型を生成する。
+				return Activator.CreateInstance(type);
 			} else {
-				return ReflectionUtils.HasInterface(type, typeof(IList)) ? Activator.CreateInstance(type) : null;
+				return null;
 			}
 		}
 
 		/// <summary>
-		/// 親オブジェクトの配列に値を追加する。
+		/// 配列に値を追加する。
 		/// </summary>
 		/// <param name="target">親オブジェクト</param>
 		/// <param name="element">追加する値</param>
@@ -83,7 +75,7 @@ namespace Entap.ObjectPack
 		}
 
 		/// <summary>
-		/// プロパティの型を取得する。
+		/// オブジェクトのプロパティの型を取得する。
 		/// </summary>
 		/// <returns>型</returns>
 		/// <param name="target">対象のオブジェクト</param>
@@ -91,14 +83,16 @@ namespace Entap.ObjectPack
 		Type GetPropertyType(object target, string propertyName)
 		{
 			if (target == null) {
-				// ルートオブジェクト
+				// ルートオブジェクトを返す。
 				return typeof(T);
 			}
+
 			if (propertyName == null || ReflectionUtils.HasInterface(target.GetType(), typeof(IDictionary))) {
-				// コレクションの要素
+				// targetは、コレクションの要素
 				return ReflectionUtils.GetCollectionElementType(target.GetType());
 			}
-			// オブジェクトのプロパティ
+
+			// targetは、オブジェクトのプロパティ
 			var property = target.GetType().GetProperty(propertyName);
 			if (property == null) {
 				return null; // プロパティがない

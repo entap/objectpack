@@ -37,9 +37,9 @@ namespace Entap.ObjectPack
 		}
 
 		/// <summary>
-		/// JSON形式の文字列をデコードする。
+		/// デコードする。
 		/// </summary>
-		/// <returns>読み込んだオブジェクト</returns>
+		/// <returns>デコード結果のオブジェクト</returns>
 		public object Decode()
 		{
 			var value = DecodeElement(_tokenizer.ReadToken());
@@ -108,7 +108,8 @@ namespace Entap.ObjectPack
 				// プロパティを設定する
 				_mapper.SetProperty(_currentTarget, _currentPropertyName, value);
 
-				// 次のトークンが','なら次のプロパティを読み込む。'}'ならオブジェクトの定義を終了
+				// 次のトークンが','なら次のプロパティを読み込む。
+				// '}'ならオブジェクトの定義を終了。
 				token = _tokenizer.ReadToken();
 				if (token.Type == JsonTokenType.RightCurlyBracket) {
 					break;

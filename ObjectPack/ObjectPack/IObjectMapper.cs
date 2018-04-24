@@ -5,7 +5,7 @@ namespace Entap.ObjectPack
 	public interface IObjectMapper
 	{
 		/// <summary>
-		/// 親オブジェクトのプロパティに該当するオブジェクトを生成する。
+		/// プロパティを指定し、その型に適合するオブジェクトを生成する。
 		/// </summary>
 		/// <returns>生成されたオブジェクト</returns>
 		/// <param name="target">親オブジェクト</param>
@@ -13,7 +13,7 @@ namespace Entap.ObjectPack
 		object CreateObject(object target, string propertyName);
 
 		/// <summary>
-		/// 親オブジェクトのプロパティに値を設定する。
+		/// プロパティに値を設定する。
 		/// </summary>
 		/// <param name="target">親オブジェクト</param>
 		/// <param name="propertyName">プロパティ名</param>
@@ -21,7 +21,7 @@ namespace Entap.ObjectPack
 		void SetProperty(object target, string propertyName, object propertyValue);
 
 		/// <summary>
-		/// 親オブジェクトのプロパティに該当する配列を生成する。
+		/// プロパティを指定し、その型に適合する配列を生成する。
 		/// </summary>
 		/// <returns>生成されたオブジェクト</returns>
 		/// <param name="target">親オブジェクト</param>
@@ -29,7 +29,7 @@ namespace Entap.ObjectPack
 		object CreateArray(object target, string propertyName);
 
 		/// <summary>
-		/// 親オブジェクトの配列に値を追加する。
+		/// 配列に値を追加する。
 		/// </summary>
 		/// <param name="target">親オブジェクト</param>
 		/// <param name="element">追加する値</param>

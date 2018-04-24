@@ -30,10 +30,10 @@ namespace Entap.ObjectPack
 				return;
 			}
 			var type = obj.GetType();
-			if (ReflectionUtils.HasInterface(type, typeof(IList))) {
-				EncodeArray((IList)obj);
-			} else if (ReflectionUtils.HasInterface(type, typeof(IDictionary))) {
+			if (ReflectionUtils.HasInterface(type, typeof(IDictionary))) {
 				EncodeDictionary((IDictionary)obj);
+			} else if (ReflectionUtils.HasInterface(type, typeof(IList))) {
+				EncodeArray((IList)obj);
 			} else if (type == typeof(string)) {
 				EncodeString((string)obj);
 			} else if (ReflectionUtils.IsNumericType(type)) {
@@ -92,40 +92,36 @@ namespace Entap.ObjectPack
 		{
 			_writer.Write('"');
 			for (var i = 0; i < str.Length; i++) {
-				var c = str[i];
-				switch (c) {
-					case '"':
-						_writer.Write("\\\"");
-						break;
-					case '\\':
-						_writer.Write("\\\\");
-						break;
-					case '\b':
-						_writer.Write("\\b");
-						break;
-					case '\f':
-						_writer.Write("\\f");
-						break;
-					case '\n':
-						_writer.Write("\\n");
-						break;
-					case '\r':
-						_writer.Write("\\r");
-						break;
-					case '\t':
-						_writer.Write("\\t");
-						break;
-					default:
-						if ('\x20' <= c && c <= '\x7f') {
-							_writer.Write(((char)c).ToString());
-						} else {
-							_writer.Write("\\u");
-							_writer.Write(((int)c).ToString("x4"));
-						}
-						break;
-				}
+				_writer.Write(EscapeChar(str[i]));
 			}
 			_writer.Write("\"");
+		}
+
+		/// <summary>
+		/// 文字をエスケープする。
+		/// </summary>
+		/// <returns>エスケープ結果の文字列</returns>
+		/// <param name="c">文字</param>
+		string EscapeChar(char c)
+		{
+			switch (c) {
+				case '"':
+					return "\\\"";
+				case '\\':
+					return "\\\\";
+				case '\b':
+					return "\\b";
+				case '\f':
+					return "\\f";
+				case '\n':
+					return "\\n";
+				case '\r':
+					return "\\r";
+				case '\t':
+					return "\\t";
+				default:
+					return ('\x20' <= c && c <= '\x7f') ? c.ToString() : ("\\u" + ((int)c).ToString("x4"));
+			}
 		}
 
 		/// <summary>
@@ -177,7 +173,8 @@ namespace Entap.ObjectPack
 		/// </summary>
 		/// <param name="obj">対象のオブジェクト</param>
 		/// <param name="encoder">エンコードする関数.</param>
-		void EncodeProperties(object obj, Action<string, object> encoder) {
+		void EncodeProperties(object obj, Action<string, object> encoder)
+		{
 			foreach (var field in obj.GetType().GetFields()) {
 				encoder(field.Name, field.GetValue(obj));
 			}

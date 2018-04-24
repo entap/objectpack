@@ -9,10 +9,10 @@ namespace Entap.ObjectPack
 		/// JSON形式の文字列をデコードし、オブジェクトにマッピングする。
 		/// </summary>
 		/// <returns>デコード結果</returns>
-		/// <param name="s">JSON形式の文字列</param>
-		public static T Decode<T>(string s) where T : new()
+		/// <param name="jsonString">JSON形式の文字列</param>
+		public static T Decode<T>(string jsonString) where T : new()
 		{
-			return (T)(new JsonDecoder(s, new ReflectionMapper<T>())).Decode();
+			return (T)(new JsonDecoder(jsonString, new ReflectionMapper<T>())).Decode();
 		}
 
 		/// <summary>
@@ -29,10 +29,10 @@ namespace Entap.ObjectPack
 		/// JSON形式の文字列をデコードし、コレクションとして取得する。
 		/// </summary>
 		/// <returns>デコード結果</returns>
-		/// <param name="s">JSON形式の文字列</param>
-		public static object Decode(string s)
+		/// <param name="jsonString">JSON形式の文字列</param>
+		public static object Decode(string jsonString)
 		{
-			return (new JsonDecoder(s, new CollectionMapper())).Decode();
+			return (new JsonDecoder(jsonString, new CollectionMapper())).Decode();
 		}
 
 		/// <summary>

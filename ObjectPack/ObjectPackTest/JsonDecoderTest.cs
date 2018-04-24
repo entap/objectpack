@@ -1,6 +1,4 @@
 ﻿using NUnit.Framework;
-using Entap.ObjectPack;
-using System;
 using System.Collections.Generic;
 
 namespace Entap.ObjectPack.Test
@@ -21,7 +19,7 @@ namespace Entap.ObjectPack.Test
 		[Test]
 		public void DecoderTest2()
 		{
-			var m1 = Json.Decode<Model>("{\"i\":123,\"d\":1.0,\"s\":\"xyz\",\"b\":true}");
+			var m1 = Json.Decode<TestModel>("{\"i\":123,\"d\":1.0,\"s\":\"xyz\",\"b\":true}");
 			Assert.AreEqual(123, m1.i);
 			Assert.AreEqual(1.0, m1.d);
 			Assert.AreEqual("xyz", m1.s);
@@ -33,13 +31,20 @@ namespace Entap.ObjectPack.Test
 			Assert.AreEqual(3, m2[2]);
 		}
 
-		struct Model
+		class TestModel
 		{
 			public int i;
 			public double d;
 			public string s;
 			public bool b;
-			public List<Model> models;
+			public List<TestModel> models;
+			public TestModel() {
+				i = 0;
+				d = 0.0;
+				s = "";
+				b = false;
+				models = new List<TestModel>();
+			}
 		}
 	}
 }

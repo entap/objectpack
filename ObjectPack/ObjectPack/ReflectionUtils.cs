@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -10,7 +9,7 @@ namespace Entap.ObjectPack
 		/// <summary>
 		/// 数値型の型の一覧
 		/// </summary>
-		static readonly List<Type> NumericTypes = new List<Type> {
+		static readonly HashSet<Type> NumericTypes = new HashSet<Type> {
 			typeof(sbyte), typeof(byte), typeof(short), typeof(ushort), typeof(int), typeof(uint),
 			typeof(long), typeof(ulong), typeof(float), typeof(double), typeof(decimal),
 		};
@@ -98,14 +97,16 @@ namespace Entap.ObjectPack
 		/// <param name="interfaceType">インターフェイスの型</param>
 		public static bool HasInterface(Type classType, Type interfaceType)
 		{
-			if (!Interfaces.ContainsKey(classType)) {
-				var typeSet = new HashSet<Type>();
+			if (Interfaces.ContainsKey(classType)) {
+				return Interfaces[classType].Contains(interfaceType);
+			} else {
+				var interfaceTypes = new HashSet<Type>();
 				foreach (var type in classType.GetInterfaces()) {
-					typeSet.Add(type);
+					interfaceTypes.Add(type);
 				}
-				Interfaces.Add(classType, typeSet);
+				Interfaces.Add(classType, interfaceTypes);
+				return interfaceTypes.Contains(interfaceType);
 			}
-			return Interfaces[classType].Contains(interfaceType);
 		}
 
 		/// <summary>
@@ -115,11 +116,35 @@ namespace Entap.ObjectPack
 		/// <param name="type">配列の型</param>
 		public static Type GetCollectionElementType(Type type)
 		{
-			if (!CollectionElementTypes.ContainsKey(type)) {
+			if (CollectionElementTypes.ContainsKey(type)) {
+				return CollectionElementTypes[type];
+			} else {
 				var parameters = type.GetMethod("Add").GetParameters();
-				CollectionElementTypes[type] = parameters[parameters.Length - 1].ParameterType;
+				return CollectionElementTypes[type] = parameters[parameters.Length - 1].ParameterType;
 			}
-			return CollectionElementTypes[type];
+		}
+
+		/// <summary>
+		/// オブジェクトのプロパティ・フィールドに値を設定する。
+		/// </summary>
+		/// <param name="target">対象のオブジェクト</param>
+		/// <param name="propertyName">プロパティ名</param>
+		/// <param name="value">設定する値</param>
+		public static void SetProperty(object target, string propertyName, object value)
+		{
+			var field = target.GetType().GetField(propertyName);
+			if (field != null) {
+				if ((value = ReflectionUtils.Convert(value, field.FieldType)) != null) {
+					field.SetValue(target, value);
+				}
+			} else {
+				var property = target.GetType().GetProperty(propertyName);
+				if (property != null) {
+					if ((value = ReflectionUtils.Convert(value, property.PropertyType)) != null) {
+						property.SetValue(target, value, null);
+					}
+				}
+			}
 		}
 	}
 }
