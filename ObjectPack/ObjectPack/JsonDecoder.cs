@@ -7,7 +7,7 @@ namespace Entap.ObjectPack
 	/// <summary>
 	/// JSON形式の文字列をデコードする。
 	/// </summary>
-	public class JsonDecoder
+	public sealed class JsonDecoder
 	{
 		readonly JsonTokenizer _tokenizer;
 		readonly IObjectMapper _mapper;

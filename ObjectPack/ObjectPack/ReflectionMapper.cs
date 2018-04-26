@@ -6,7 +6,7 @@ namespace Entap.ObjectPack
 	/// <summary>
 	/// リフレクションを使ったマッパー
 	/// </summary>
-	public class ReflectionMapper<T> : IObjectMapper where T : new()
+	public sealed class ReflectionMapper<T> : IObjectMapper where T : new()
 	{
 		/// <summary>
 		/// プロパティを指定し、その型に適合するオブジェクトを生成する。
@@ -30,12 +30,12 @@ namespace Entap.ObjectPack
 		{
 			if (target is IDictionary) {
 				// 辞書型に追加する
-				var elementType = ReflectionUtils.GetCollectionElementType(target.GetType());
-				var value = ReflectionUtils.Convert(propertyValue, elementType);
+				var elementType = TypeUtils.GetCollectionElementType(target.GetType());
+				var value = TypeUtils.Convert(propertyValue, elementType);
 				((IDictionary)target).Add(propertyName, value);
 			} else {
 				// オブジェクトのプロパティに値を設定
-				ReflectionUtils.SetProperty(target, propertyName, propertyValue);
+				TypeUtils.SetPropertyValue(target, propertyName, propertyValue);
 			}
 		}
 
@@ -51,7 +51,7 @@ namespace Entap.ObjectPack
 			if (type.IsArray) {
 				// 固定長配列の場合、一度、可変長配列を生成する
 				return new ArrayList();
-			} else if (ReflectionUtils.HasInterface(type, typeof(IList))) {
+			} else if (TypeUtils.HasInterface(type, typeof(IList))) {
 				// 指定されたプロパティには配列の機能がある。
 				// 決まった型を生成する。
 				return Activator.CreateInstance(type);
@@ -67,8 +67,8 @@ namespace Entap.ObjectPack
 		/// <param name="element">追加する値</param>
 		public void AddElement(object target, object element)
 		{
-			var elementType = ReflectionUtils.GetCollectionElementType(target.GetType());
-			var value = ReflectionUtils.Convert(element, elementType);
+			var elementType = TypeUtils.GetCollectionElementType(target.GetType());
+			var value = TypeUtils.Convert(element, elementType);
 			if (value != null) {
 				((IList)target).Add(value);
 			}
@@ -87,17 +87,13 @@ namespace Entap.ObjectPack
 				return typeof(T);
 			}
 
-			if (propertyName == null || ReflectionUtils.HasInterface(target.GetType(), typeof(IDictionary))) {
+			if (propertyName == null || TypeUtils.HasInterface(target.GetType(), typeof(IDictionary))) {
 				// targetは、コレクションの要素
-				return ReflectionUtils.GetCollectionElementType(target.GetType());
+				return TypeUtils.GetCollectionElementType(target.GetType());
 			}
 
 			// targetは、オブジェクトのプロパティ
-			var property = target.GetType().GetProperty(propertyName);
-			if (property == null) {
-				return null; // プロパティがない
-			}
-			return property.PropertyType;
+			return TypeUtils.GetPropertyType(target.GetType(), propertyName);
 		}
 	}
 }

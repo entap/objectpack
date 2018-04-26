@@ -60,8 +60,8 @@
     <Compile Include="..\ObjectPack\JsonEncoder.cs">
       <Link>JsonEncoder.cs</Link>
     </Compile>
-    <Compile Include="..\ObjectPack\ReflectionUtils.cs">
-      <Link>ReflectionUtils.cs</Link>
+    <Compile Include="..\ObjectPack\TypeUtils.cs">
+      <Link>TypeUtils.cs</Link>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

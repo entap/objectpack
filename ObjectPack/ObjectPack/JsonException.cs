@@ -3,7 +3,7 @@
 namespace Entap.ObjectPack
 {
 	[System.Serializable]
-	public class JsonException : Exception
+	public sealed class JsonException : Exception
 	{
 		readonly long _position;
 

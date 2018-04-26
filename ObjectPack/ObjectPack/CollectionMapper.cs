@@ -7,7 +7,7 @@ namespace Entap.ObjectPack
 	/// <summary>
 	/// Hashtable/ArrayListへのマッパー
 	/// </summary>
-	public class CollectionMapper : IObjectMapper
+	public sealed class CollectionMapper : IObjectMapper
 	{
 		/// <summary>
 		/// 親オブジェクトのプロパティに該当するオブジェクトを生成する。

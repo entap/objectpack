@@ -8,7 +8,7 @@ namespace Entap.ObjectPack
 	/// <summary>
 	/// JSON形式の文字列をトークンに分解する。
 	/// </summary>
-	public class JsonTokenizer
+	public sealed class JsonTokenizer
 	{
 		readonly TextReader _reader;
 		int _position;

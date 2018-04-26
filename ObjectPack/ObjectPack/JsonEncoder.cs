@@ -6,7 +6,7 @@ using System.IO;
 
 namespace Entap.ObjectPack
 {
-	public class JsonEncoder
+	public sealed class JsonEncoder
 	{
 		TextWriter _writer;
 
@@ -30,13 +30,13 @@ namespace Entap.ObjectPack
 				return;
 			}
 			var type = obj.GetType();
-			if (ReflectionUtils.HasInterface(type, typeof(IDictionary))) {
+			if (TypeUtils.HasInterface(type, typeof(IDictionary))) {
 				EncodeDictionary((IDictionary)obj);
-			} else if (ReflectionUtils.HasInterface(type, typeof(IList))) {
+			} else if (TypeUtils.HasInterface(type, typeof(IList))) {
 				EncodeArray((IList)obj);
 			} else if (type == typeof(string)) {
 				EncodeString((string)obj);
-			} else if (ReflectionUtils.IsNumericType(type)) {
+			} else if (TypeUtils.IsNumberType(type)) {
 				EncodeNumber(obj);
 			} else if (obj is bool) {
 				EncodeBoolean((bool)obj);
