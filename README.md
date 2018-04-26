@@ -13,6 +13,12 @@ https://entap.github.io/objectpack/ObjectPack.dll
 JSONの文字列をモデルにマッピングする。
 
     Json.Decode<TestModel>("{\"i\":123,\"d\":1.0,\"s\":\"xyz\",\"b\":true}");
+    class TestModel {
+        public int i;
+        public double d;
+        public string s;
+        public bool b;
+    }
 
 配列とか型を指定してマッピングする。
 
@@ -22,7 +28,6 @@ C#の標準のコレクション(objectを要素に取ったHashMapとArrayList)
 
     Json.Decode("[1,2,3]");
 
-JSON.NETに比べると、マッピングがとってもゆるめ。
-PHPとかでDBから取得した値をいちいち型変換するのうざいんですよ。
+マッピングがデフォルトでゆるい。
 int[]とかのArray型、Dictionary型に対応。
 JSONで文字列でも、マッピング先が数値なら、int.Parseとかしてくれる。
